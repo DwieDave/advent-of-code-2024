@@ -12,7 +12,7 @@ pub fn main() {
 
 fn solve(path: String) {
   let #(left_numbers, right_amounts) =
-    reduce_file_lines(path, #([], dict.new()), parse_line, reduce_line_numbers)
+    reduce_file_lines(path, #([], dict.new()), parse_line, combine_line_numbers)
 
   left_numbers
   |> fold(0, fn(acc, left) {
@@ -23,7 +23,7 @@ fn solve(path: String) {
   })
 }
 
-fn reduce_line_numbers(
+fn combine_line_numbers(
   acc: #(List(Int), dict.Dict(Int, Int)),
   line_num: #(Int, Int),
 ) {

@@ -11,7 +11,7 @@ pub fn main() {
 
 fn solve(path: String) {
   let #(left_numbers, right_numbers) =
-    reduce_file_lines(path, #([], []), parse_line, reduce_line_numbers)
+    reduce_file_lines(path, #([], []), parse_line, combine_line_numbers)
 
   let #(left_sorted, right_sorted) = #(
     sort(left_numbers, int.compare),
@@ -32,7 +32,7 @@ pub fn parse_line(line: String) {
   #(left, right)
 }
 
-fn reduce_line_numbers(acc: #(List(Int), List(Int)), line_num: #(Int, Int)) {
+fn combine_line_numbers(acc: #(List(Int), List(Int)), line_num: #(Int, Int)) {
   let #(left_numbers, right_numbers) = acc
   #(append(left_numbers, [line_num.0]), append(right_numbers, [line_num.1]))
 }

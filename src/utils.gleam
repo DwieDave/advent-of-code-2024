@@ -54,7 +54,7 @@ pub fn print_results(calibration: Int, result: Int) {
   print("Result: " <> to_string(result) <> "\n")
 }
 
-pub fn list_without(input: List(a), without: Int) {
+pub fn drop_at(input: List(a), without: Int) {
   let before = take(input, without)
   let after = drop(input, without + 1)
   append(before, after)
