@@ -20,22 +20,18 @@ pub fn parse_line(line: String) {
 
 pub fn is_level_safe(level: Level) {
   let assert [first, second, ..rest] = level
-  let #(is_safe, _, _) =
-    [second, ..rest]
-    |> fold(#(True, first, int.compare(first, second)), fn(acc, num) {
-      let #(result, last_num, last_order) = acc
-      let difference = absolute_value(last_num - num)
-      let new_order = int.compare(last_num, num)
-      #(
-        result
-          && { difference > 0 && difference <= 3 }
-          && last_order == new_order,
-        num,
-        new_order,
-      )
-    })
-
-  #(is_safe, level)
+  [second, ..rest]
+  |> fold(#(True, first, int.compare(first, second)), fn(acc, num) {
+    let #(result, last_num, last_order) = acc
+    let difference = absolute_value(last_num - num)
+    let new_order = int.compare(last_num, num)
+    #(
+      result && { difference > 0 && difference <= 3 } && last_order == new_order,
+      num,
+      new_order,
+    )
+  })
+  |> fn(res) { #(res.0, level) }
 }
 
 fn combine_line_numbers(acc: Int, level_info: #(Bool, Level)) {

@@ -1,5 +1,6 @@
 import day3_1.{calculate_submatches}
 import gleam/list
+import gleam/pair
 import gleam/regexp
 import utils.{print_results, read_file}
 
@@ -12,16 +13,15 @@ fn parse_memory(memory: String) {
   let assert Ok(regex) =
     regexp.from_string("mul\\((\\d+)\\,(\\d+)\\)|don\\'t\\(\\)|do\\(\\)")
 
-  {
-    regexp.scan(regex, memory)
-    |> list.fold(#(0, True), fn(acc, match) {
-      let #(sum, is_active) = acc
-      case match.content, is_active {
-        "don't()", _ -> #(sum, False)
-        "do()", _ -> #(sum, True)
-        _, True -> #(sum + calculate_submatches(match.submatches), is_active)
-        _, _ -> acc
-      }
-    })
-  }.0
+  regexp.scan(regex, memory)
+  |> list.fold(#(0, True), fn(acc, match) {
+    let #(sum, is_active) = acc
+    case match.content, is_active {
+      "don't()", _ -> #(sum, False)
+      "do()", _ -> #(sum, True)
+      _, True -> #(sum + calculate_submatches(match.submatches), is_active)
+      _, _ -> acc
+    }
+  })
+  |> pair.first
 }
