@@ -1,5 +1,6 @@
 import day2_1.{type Level, is_level_safe, parse_line}
 import gleam/list.{length}
+import gleam/pair
 import utils.{drop_at, print_results, reduce_file_lines}
 
 pub fn main() {
@@ -8,9 +9,8 @@ pub fn main() {
 }
 
 fn retry_unsafe_level(level: Level, without_index: Int) -> Bool {
-  let last_level = length(level) - 1
-  let is_last = without_index >= last_level
-  let #(is_safe, _) = level |> drop_at(without_index) |> is_level_safe
+  let is_last = without_index >= length(level) - 1
+  let is_safe = level |> drop_at(without_index) |> is_level_safe |> pair.first
 
   case is_safe, is_last {
     True, _ -> True
