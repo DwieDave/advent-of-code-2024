@@ -6,9 +6,8 @@ import gleam/result
 import utils.{print_results, read_file}
 
 pub fn main() {
-  let calibration = read_file("data/calibration3.txt") |> parse_memory
-  let result = read_file("data/input3.txt") |> parse_memory
-  print_results(calibration, result)
+  let solve = fn(path: String) { read_file(path) |> parse_memory }
+  #(solve("data/calibration3.txt"), solve("data/input3.txt")) |> print_results
 }
 
 pub fn calculate_submatches(submatches: List(Option(String))) {

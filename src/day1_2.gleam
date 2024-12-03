@@ -5,9 +5,7 @@ import gleam/option.{None, Some}
 import utils.{print_results, reduce_file_lines}
 
 pub fn main() {
-  let calibration = solve("data/calibration1.txt")
-  let result = solve("data/input1.txt")
-  print_results(calibration, result)
+  #(solve("data/calibration1.txt"), solve("data/input1.txt")) |> print_results
 }
 
 fn solve(path: String) {

@@ -49,9 +49,10 @@ fn read_line_loop(
   }
 }
 
-pub fn print_results(calibration: Int, result: Int) {
-  print("Calibration Result: " <> to_string(calibration) <> "\n")
-  print("Result: " <> to_string(result) <> "\n")
+pub fn print_results(results: #(Int, Int)) {
+  let #(calibration, result) = results
+  print("  calibration: " <> to_string(calibration) <> "\n")
+  print("  main input : " <> to_string(result) <> "\n")
 }
 
 pub fn drop_at(input: List(a), without: Int) {

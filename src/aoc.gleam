@@ -13,6 +13,7 @@ type Puzzle {
 }
 
 pub fn main() {
+  print("\n")
   [
     Puzzle(day: 1, functions: [day1_1, day1_2]),
     Puzzle(day: 2, functions: [day2_1, day2_2]),
@@ -35,6 +36,7 @@ fn execute_all_puzzles(puzzles: List(Puzzle)) {
       )
       puzzle_main()
       print("---------------------------\n")
+      print("\n")
     })
   })
 }
