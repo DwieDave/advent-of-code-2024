@@ -1,4 +1,5 @@
 import file_streams/file_stream.{type FileStream, open_read, read_line}
+import gleam/dict
 import gleam/function.{identity}
 import gleam/int.{to_string}
 import gleam/io.{print}
@@ -31,6 +32,10 @@ pub fn read_file_lines(path: String) -> List(String) {
   read_line_loop([], stream, identity, fn(acc, line) {
     append(acc, [line |> trim_end])
   })
+}
+
+pub fn to_dict(list: List(a)) {
+  list |> list.index_map(fn(el, i) { #(i, el) }) |> dict.from_list
 }
 
 fn read_line_loop(
