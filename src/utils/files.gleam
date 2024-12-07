@@ -1,10 +1,7 @@
 import file_streams/file_stream.{type FileStream, open_read, read_line}
-import gleam/dict
-import gleam/function.{identity}
-import gleam/int.{to_string}
-import gleam/io.{print}
-import gleam/list.{append, drop, take}
-import gleam/string.{trim_end}
+import gleam/function
+import gleam/list
+import gleam/string
 
 type Reducer(state, value) =
   fn(state, value) -> state
@@ -12,6 +9,7 @@ type Reducer(state, value) =
 type LineProcessor(value) =
   fn(String) -> value
 
+// FILE UTILITIES
 pub fn reduce_file_lines(
   path: String,
   initial initial: state,
@@ -24,18 +22,14 @@ pub fn reduce_file_lines(
 
 pub fn read_file(path: String) -> String {
   let assert Ok(stream) = open_read(path)
-  read_line_loop("", stream, identity, string.append)
+  read_line_loop("", stream, function.identity, string.append)
 }
 
 pub fn read_file_lines(path: String) -> List(String) {
   let assert Ok(stream) = open_read(path)
-  read_line_loop([], stream, identity, fn(acc, line) {
-    append(acc, [line |> trim_end])
+  read_line_loop([], stream, function.identity, fn(acc, line) {
+    list.append(acc, [line |> string.trim_end])
   })
-}
-
-pub fn to_dict(list: List(a)) {
-  list |> list.index_map(fn(el, i) { #(i, el) }) |> dict.from_list
 }
 
 fn read_line_loop(
@@ -52,16 +46,4 @@ fn read_line_loop(
       |> reduce(initial, _)
       |> read_line_loop(stream, process, reduce)
   }
-}
-
-pub fn print_results(results: #(Int, Int)) {
-  let #(calibration, result) = results
-  print("  calibration: " <> to_string(calibration) <> "\n")
-  print("  main input : " <> to_string(result) <> "\n")
-}
-
-pub fn drop_at(input: List(a), without: Int) {
-  let before = take(input, without)
-  let after = drop(input, without + 1)
-  append(before, after)
 }

@@ -2,11 +2,16 @@ import day3_1.{calculate_submatches}
 import gleam/list
 import gleam/pair
 import gleam/regexp
-import utils.{print_results, read_file}
+
+import utils/aoc.{print_results}
+import utils/files.{read_file}
 
 pub fn main() {
-  let solve = fn(path: String) { read_file(path) |> parse_memory }
   #(solve("data/calibration3_2.txt"), solve("data/input3.txt")) |> print_results
+}
+
+pub fn solve(path: String) {
+  read_file(path) |> parse_memory
 }
 
 fn parse_memory(memory: String) {

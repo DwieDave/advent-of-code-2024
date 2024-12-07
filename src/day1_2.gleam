@@ -2,13 +2,14 @@ import day1_1.{parse_line}
 import gleam/dict.{get, upsert}
 import gleam/list.{append, fold}
 import gleam/option.{None, Some}
-import utils.{print_results, reduce_file_lines}
+import utils/aoc.{print_results}
+import utils/files.{reduce_file_lines}
 
 pub fn main() {
   #(solve("data/calibration1.txt"), solve("data/input1.txt")) |> print_results
 }
 
-fn solve(path: String) {
+pub fn solve(path: String) {
   let #(left_numbers, right_amounts) =
     reduce_file_lines(path, #([], dict.new()), parse_line, combine_line_numbers)
 

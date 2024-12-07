@@ -1,22 +1,15 @@
 import gleam/dict.{type Dict}
 import gleam/list
-import gleam/result
 import gleam/string
-import utils.{print_results, read_file_lines, to_dict}
+import utils/aoc.{
+  type Direction, type Grid, type Position, Direction, Position, grid_at,
+  lines_to_grid, next_position, print_results,
+}
+import utils/common.{to_dict}
+import utils/files.{read_file_lines}
 
 pub fn main() {
   #(solve("data/calibration4_1.txt"), solve("data/input4.txt")) |> print_results
-}
-
-pub type Grid =
-  Dict(Int, Dict(Int, String))
-
-pub type Position {
-  Position(x: Int, y: Int)
-}
-
-pub type Direction {
-  Direction(x: Int, y: Int)
 }
 
 pub type Game {
@@ -43,18 +36,6 @@ fn solve(path: String) {
   |> count_occurences("XMAS")
 }
 
-pub fn lines_to_grid(lines) -> Grid {
-  lines
-  |> list.map(fn(line) { line |> string.to_graphemes |> to_dict })
-  |> to_dict
-}
-
-pub fn grid_at(grid: Grid, position: Position) {
-  grid
-  |> dict.get(position.y)
-  |> result.try(dict.get(_, position.x))
-}
-
 fn check_direction_loop(
   game: Game,
   position: Position,
@@ -79,10 +60,6 @@ fn check_direction_loop(
           )
       }
   }
-}
-
-pub fn next_position(position: Position, direction: Direction) {
-  Position(position.x + direction.x, position.y + direction.y)
 }
 
 fn count_directions(game: Game, position: Position) {

@@ -1,11 +1,16 @@
 import day2_1.{type Level, is_level_safe, parse_line}
 import gleam/list.{length}
 import gleam/pair
-import utils.{drop_at, print_results, reduce_file_lines}
+import utils/aoc.{print_results}
+import utils/common.{drop_at}
+import utils/files.{reduce_file_lines}
 
 pub fn main() {
-  let solve = reduce_file_lines(_, 0, parse_line, combine_line_numbers)
   #(solve("data/calibration2.txt"), solve("data/input2.txt")) |> print_results
+}
+
+pub fn solve(path: String) {
+  reduce_file_lines(path, 0, parse_line, combine_line_numbers)
 }
 
 fn retry_unsafe_level(level: Level, without_index: Int) -> Bool {

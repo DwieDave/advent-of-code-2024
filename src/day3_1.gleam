@@ -3,11 +3,15 @@ import gleam/list.{fold, map}
 import gleam/option.{type Option}
 import gleam/regexp.{scan}
 import gleam/result
-import utils.{print_results, read_file}
+import utils/aoc.{print_results}
+import utils/files.{read_file}
 
 pub fn main() {
-  let solve = fn(path: String) { read_file(path) |> parse_memory }
   #(solve("data/calibration3.txt"), solve("data/input3.txt")) |> print_results
+}
+
+pub fn solve(path: String) {
+  read_file(path) |> parse_memory
 }
 
 pub fn calculate_submatches(submatches: List(Option(String))) {

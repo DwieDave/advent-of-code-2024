@@ -1,11 +1,15 @@
 import gleam/int.{absolute_value}
 import gleam/list.{fold, try_map}
 import gleam/string.{split, trim_end}
-import utils.{print_results, reduce_file_lines}
+import utils/aoc.{print_results}
+import utils/files.{reduce_file_lines}
 
 pub fn main() {
-  let solve = reduce_file_lines(_, 0, parse_line, combine_line_numbers)
   #(solve("data/calibration2.txt"), solve("data/input2.txt")) |> print_results
+}
+
+pub fn solve(path: String) {
+  reduce_file_lines(path, 0, parse_line, combine_line_numbers)
 }
 
 pub type Level =
