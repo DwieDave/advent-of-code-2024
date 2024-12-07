@@ -3,7 +3,7 @@ import gleam/list.{fold, map}
 import gleam/option.{type Option}
 import gleam/regexp.{scan}
 import gleam/result
-import utils/aoc.{print_results}
+import utils/common.{print_results}
 import utils/files.{read_file}
 
 pub fn main() {

@@ -1,6 +1,4 @@
 import gleam/dict.{type Dict}
-import gleam/int.{to_string}
-import gleam/io.{print}
 import gleam/list
 import gleam/result
 import gleam/string
@@ -15,13 +13,6 @@ pub type Position {
 
 pub type Direction {
   Direction(x: Int, y: Int)
-}
-
-// UTILITIES
-pub fn print_results(results: #(Int, Int)) {
-  let #(calibration, result) = results
-  print("  calibration: " <> to_string(calibration) <> "\n")
-  print("  main input : " <> to_string(result) <> "\n")
 }
 
 pub fn lines_to_grid(lines) -> Grid {

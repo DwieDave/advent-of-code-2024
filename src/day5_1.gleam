@@ -7,8 +7,7 @@ import gleam/regexp
 import gleam/result
 import gleam/set
 import gleam/string
-import utils/aoc.{print_results}
-import utils/common.{pair_try_map, to_dict}
+import utils/common.{pair_try_map, print_results, to_dict}
 import utils/files.{read_file}
 
 pub fn main() {

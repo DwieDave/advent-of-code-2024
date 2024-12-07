@@ -2,7 +2,7 @@ import day1_1.{parse_line}
 import gleam/dict.{get, upsert}
 import gleam/list.{append, fold}
 import gleam/option.{None, Some}
-import utils/aoc.{print_results}
+import utils/common.{print_results}
 import utils/files.{reduce_file_lines}
 
 pub fn main() {

@@ -1,12 +1,12 @@
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/string
-import utils/aoc.{
-  type Direction, type Grid, type Position, Direction, Position, grid_at,
-  lines_to_grid, next_position, print_results,
-}
-import utils/common.{to_dict}
+import utils/common.{print_results, to_dict}
 import utils/files.{read_file_lines}
+import utils/grid.{
+  type Direction, type Grid, type Position, Direction, Position, grid_at,
+  lines_to_grid, next_position,
+}
 
 pub fn main() {
   #(solve("data/calibration4_1.txt"), solve("data/input4.txt")) |> print_results

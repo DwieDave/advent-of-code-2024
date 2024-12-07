@@ -1,7 +1,7 @@
 import gleam/int.{absolute_value}
 import gleam/list.{append, fold, sort, zip}
 import gleam/string.{split_once}
-import utils/aoc.{print_results}
+import utils/common.{print_results}
 import utils/files.{reduce_file_lines}
 
 pub fn main() {

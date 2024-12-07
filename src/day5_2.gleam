@@ -5,7 +5,7 @@ import gleam/list
 import gleam/order
 import gleam/result
 import gleam/set.{contains}
-import utils/aoc.{print_results}
+import utils/common.{print_results}
 import utils/files.{read_file}
 
 pub fn main() {

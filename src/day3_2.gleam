@@ -3,7 +3,7 @@ import gleam/list
 import gleam/pair
 import gleam/regexp
 
-import utils/aoc.{print_results}
+import utils/common.{print_results}
 import utils/files.{read_file}
 
 pub fn main() {

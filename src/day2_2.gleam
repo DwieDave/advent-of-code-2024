@@ -1,8 +1,7 @@
 import day2_1.{type Level, is_level_safe, parse_line}
 import gleam/list.{length}
 import gleam/pair
-import utils/aoc.{print_results}
-import utils/common.{drop_at}
+import utils/common.{drop_at, print_results}
 import utils/files.{reduce_file_lines}
 
 pub fn main() {

@@ -1,6 +1,14 @@
 import gleam/dict
+import gleam/int.{to_string}
+import gleam/io.{print}
 import gleam/list.{append, drop, take}
 import gleam/result
+
+pub fn print_results(results: #(Int, Int)) {
+  let #(calibration, result) = results
+  print("  calibration: " <> to_string(calibration) <> "\n")
+  print("  main input : " <> to_string(result) <> "\n")
+}
 
 pub fn to_dict(list: List(a)) {
   list |> list.index_map(fn(el, i) { #(i, el) }) |> dict.from_list
