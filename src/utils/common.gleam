@@ -3,6 +3,7 @@ import gleam/int.{to_string}
 import gleam/io.{print}
 import gleam/list.{append, drop, take}
 import gleam/result
+import gleam/string
 
 pub fn print_results(results: #(Int, Int)) {
   let #(calibration, result) = results
@@ -31,4 +32,13 @@ pub fn drop_at(input: List(a), without: Int) {
   let before = take(input, without)
   let after = drop(input, without + 1)
   append(before, after)
+}
+
+pub fn concat_ints(left: Int, right: Int) -> Int {
+  let left_str = int.to_string(left)
+  let right_str = int.to_string(right)
+  let assert Ok(res) =
+    string.concat([left_str, right_str])
+    |> int.parse
+  res
 }
