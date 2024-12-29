@@ -19,22 +19,29 @@ pub type Error {
 
 pub fn solve(path: String) {
   let assert Ok(res) =
-    reduce_file_lines(path, Ok(0), check_line, fn(acc, line_result) {
-      use acc_val <- result.try(acc)
-      use target <- result.try(line_result)
-      Ok(acc_val + target)
-    })
+    reduce_file_lines(
+      path,
+      Ok(0),
+      check_line(with: try_combination_loop),
+      fn(acc, line_result) {
+        use acc_val <- result.try(acc)
+        use target <- result.try(line_result)
+        Ok(acc_val + target)
+      },
+    )
   res
 }
 
-fn check_line(line: String) {
-  use #(target, numbers) <- result.try(parse_line(line))
-  use first <- result.try(
-    dict.get(numbers, 0) |> result.map_error(CheckLineError),
-  )
-  case try_combination_loop(numbers, target, first, 1) {
-    True -> Ok(target)
-    _ -> Ok(0)
+pub fn check_line(with check: fn(dict.Dict(Int, Int), Int, Int, Int) -> Bool) {
+  fn(line: String) {
+    use #(target, numbers) <- result.try(parse_line(line))
+    use first <- result.try(
+      dict.get(numbers, 0) |> result.map_error(CheckLineError),
+    )
+    case check(numbers, target, first, 1) {
+      True -> Ok(target)
+      _ -> Ok(0)
+    }
   }
 }
 
