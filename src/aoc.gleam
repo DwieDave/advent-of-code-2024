@@ -1,3 +1,5 @@
+import day11_1.{main as day11_1}
+import day11_2.{main as day11_2}
 import day1_1.{main as day1_1}
 import day1_2.{main as day1_2}
 import day2_1.{main as day2_1}
@@ -11,6 +13,7 @@ import day5_2.{main as day5_2}
 import day6_1.{main as day6_1}
 import day7_1.{main as day7_1}
 import day7_2.{main as day7_2}
+import day9_1.{main as day9_1}
 import gleam/int.{to_string}
 import gleam/io.{print}
 import gleam/list.{index_map, map}
@@ -29,6 +32,8 @@ pub fn main() {
     Puzzle(day: 5, functions: [day5_1, day5_2]),
     Puzzle(day: 6, functions: [day6_1]),
     Puzzle(day: 7, functions: [day7_1, day7_2]),
+    Puzzle(day: 9, functions: [day9_1]),
+    Puzzle(day: 11, functions: [day11_1, day11_2]),
   ]
   |> execute_all_puzzles
 }

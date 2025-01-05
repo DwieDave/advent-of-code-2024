@@ -12,7 +12,7 @@ pub fn main() {
   #(solve("data/calibration11.txt"), solve("data/input11.txt")) |> print_results
 }
 
-pub type Cache =
+pub type NumberCount =
   Dict(List(String), Int)
 
 pub fn solve(path: String) {
@@ -29,29 +29,37 @@ pub fn parse(path: String) {
   |> dict.map_values(fn(_, value) { list.length(value) })
 }
 
-pub fn multi_blink(input: Cache, amount: Int) {
-  list.range(0, amount - 1)
+pub fn multi_blink(input: NumberCount, amount: Int) {
+  list.range(1, amount)
   |> list.fold(input, fn(acc, _i) { blink(acc) })
   |> dict.values
   |> int.sum
 }
 
-pub fn blink(input: Cache) {
-  let update_dict = fn(acc, input) {
+fn blink(input: NumberCount) {
+  let update_number_count = fn(acc, input) {
     let #(key, value) = input
-    dict.upsert(acc, key, fn(v) {
-      case v {
+    dict.upsert(acc, key, fn(current) {
+      case current {
         Some(i) -> i + value
         None -> value
       }
     })
   }
 
-  let split = fn(num) {
-    #(
-      list.take(num, list.length(num) / 2),
-      list.drop_while(list.drop(num, list.length(num) / 2), fn(n) { n == "0" }),
-    )
+  let split = fn(num_list) {
+    let half = list.length(num_list) / 2
+    let prefix = list.take(num_list, half)
+    let suffix =
+      list.drop(num_list, half)
+      |> list.drop_while(fn(n) { n == "0" })
+      |> fn(suffix) {
+        case suffix {
+          [] -> ["0"]
+          _ -> suffix
+        }
+      }
+    #(prefix, suffix)
   }
 
   input
@@ -59,25 +67,21 @@ pub fn blink(input: Cache) {
     let digit_len_even = number_list |> list.length |> int.is_even
 
     case number_list, digit_len_even {
-      ["0"], _ -> update_dict(acc, #(["1"], amount))
+      ["0"], _ -> update_number_count(acc, #(["1"], amount))
 
       _, True -> {
         let #(prefix, suffix) = split(number_list)
-        let suffix = case suffix {
-          [] -> ["0"]
-          _ -> suffix
-        }
-        update_dict(acc, #(prefix, amount))
-        |> update_dict(#(suffix, amount))
+        update_number_count(acc, #(prefix, amount))
+        |> update_number_count(#(suffix, amount))
       }
 
       _, _ -> {
         let assert Ok(new_number_list) =
           number_list
-          |> string.join("")
+          |> string.concat
           |> int.parse
           |> result.map(fn(i) { int.to_string(i * 2024) |> string.to_graphemes })
-        update_dict(acc, #(new_number_list, amount))
+        update_number_count(acc, #(new_number_list, amount))
       }
     }
   })
