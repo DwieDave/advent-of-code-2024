@@ -19,7 +19,7 @@ pub fn solve(path: String) {
   let memory = read_file(path)
   let assert Ok(blocks) = to_blocks(memory)
 
-  compact_blocks(blocks)
+  compress_blocks(blocks)
   |> list.filter(non_empty_blocks)
   |> list.index_fold(0, fn(acc, block, position) {
     case block {
@@ -36,10 +36,8 @@ fn to_blocks(input: String) {
   |> string.trim_end
   |> string.to_graphemes
   |> list.try_map(int.parse)
-  |> result.map(list.fold(
-    _,
-    #([], True, 0),
-    fn(acc, block_nr) {
+  |> result.map(
+    list.fold(_, #([], True, 0), fn(acc, block_nr) {
       let #(checksum, is_file, file_id) = acc
       case is_file {
         True -> #(
@@ -53,8 +51,8 @@ fn to_blocks(input: String) {
           file_id,
         )
       }
-    },
-  ))
+    }),
+  )
   |> result.map(fn(triple) { triple.0 })
 }
 
@@ -65,7 +63,7 @@ fn non_empty_blocks(block) {
   }
 }
 
-fn compact_blocks(blocks: List(Block)) {
+fn compress_blocks(blocks: List(Block)) {
   let reversed_file_blocks =
     blocks
     |> list.filter(non_empty_blocks)
@@ -82,20 +80,20 @@ fn compact_blocks(blocks: List(Block)) {
 
   blocks
   |> list.index_fold(#([], reversed_file_blocks), fn(acc, block, index) {
-    let #(compacted, reversed_blocks) = acc
+    let #(compressed, reversed_blocks) = acc
     case block {
       Empty if index < used_space -> {
         let assert Ok(next_file_block) = reversed_blocks |> list.first
         #(
-          list.append(compacted, [next_file_block]),
+          list.append(compressed, [next_file_block]),
           reversed_blocks |> list.drop(1),
         )
       }
       _ if index < used_space -> #(
-        list.append(compacted, [block]),
+        list.append(compressed, [block]),
         reversed_blocks,
       )
-      _ -> #(list.append(compacted, [Empty]), [])
+      _ -> #(list.append(compressed, [Empty]), [])
     }
   })
   |> pair.first
